@@ -1,6 +1,6 @@
 # libpqxx-bazel
 
-Example showing how to build the libpqxx C++ binding for PostgreSQL with Bazel using rules_foreign_cc.
+Example showing how to build the libpqxx C++ binding for PostgreSQL with Bazel using `rules_foreign_cc` via the [`configure_make`](https://bazelbuild.github.io/rules_foreign_cc/main/configure_make.html) rule.
 
 See libpqxx: https://github.com/jtv/libpqxx
 
