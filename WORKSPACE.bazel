@@ -1,0 +1,42 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
+
+http_archive(
+    name = "rules_foreign_cc",
+    sha256 = "5470b22db8974824a1994593f117b0ef8c2e5fb474fd30a7473fcfd77d8d1ed7",
+    strip_prefix = "rules_foreign_cc-f01fd353ee2adcd55aab899c12fa2733223228a1",
+    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/f01fd353ee2adcd55aab899c12fa2733223228a1.tar.gz",
+)
+
+load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+
+rules_foreign_cc_dependencies()
+
+_ALL_CONTENT = """\
+filegroup(
+    name = "all_srcs",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+"""
+
+new_git_repository(
+    name = "libpqxx",
+    build_file_content = _ALL_CONTENT,
+    commit = "5fe041dd185d808f98df8327a583f1a55fccc15f",
+    remote = "https://github.com/jtv/libpqxx",
+)
+
+http_archive(
+    name = "com_google_absl",
+    sha256 = "1a7edda1ff56967e33bc938a4f0a68bb9efc6ba73d62bb4a5f5662463698056c",
+    strip_prefix = "abseil-cpp-20210324.2",
+    urls = ["https://github.com/abseil/abseil-cpp/archive/20210324.2.zip"],
+)
+
+http_archive(
+    name = "rules_cc",
+    sha256 = "b295cad8c5899e371dde175079c0a2cdc0151f5127acc92366a8c986beb95c76",
+    strip_prefix = "rules_cc-daf6ace7cfeacd6a83e9ff2ed659f416537b6c74",
+    urls = ["https://github.com/bazelbuild/rules_cc/archive/daf6ace7cfeacd6a83e9ff2ed659f416537b6c74.zip"],
+)

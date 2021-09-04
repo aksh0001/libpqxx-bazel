@@ -1,0 +1,28 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cc"],
+    copts = [
+        "-std=c++17",
+    ],
+    linkopts = ["-lpq"],  # Mandatory, apparently.
+    deps = [
+        ":libpqxx",
+        "@com_google_absl//absl/strings:str_format",
+    ],
+)
+
+configure_make(
+    name = "libpqxx",
+    args = [
+        "-j4",  # Make it faster by using more processes.
+    ],
+    configure_options = [
+        "--disable-documentation",
+    ],
+    lib_source = "@libpqxx//:all_srcs",
+    out_static_libs = [
+        "libpqxx.a",
+    ],
+)
